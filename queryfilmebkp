@@ -1,0 +1,212 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.5.5-10.4.32-MariaDB
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema queryfilme
+--
+
+CREATE DATABASE IF NOT EXISTS queryfilme;
+USE queryfilme;
+
+--
+-- Definition of table `adm`
+--
+
+DROP TABLE IF EXISTS `adm`;
+CREATE TABLE `adm` (
+  `idadm` int(11) NOT NULL AUTO_INCREMENT,
+  `foto` varchar(245) DEFAULT NULL,
+  `nome` varchar(100) NOT NULL,
+  `email` varchar(80) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `cadastro` datetime NOT NULL,
+  `alteracao` datetime NOT NULL,
+  `ativo` char(1) DEFAULT NULL,
+  PRIMARY KEY (`idadm`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `adm`
+--
+
+/*!40000 ALTER TABLE `adm` DISABLE KEYS */;
+INSERT INTO `adm` (`idadm`,`foto`,`nome`,`email`,`senha`,`cadastro`,`alteracao`,`ativo`) VALUES 
+ (1,'','Ronan Menezes','adm@gmail.com','$2y$10$KJ22/1fZL1muZeqw5RGxMObQOLlAUj1PPeNKKGY37UPBVtvryLYlK','2024-02-19 15:13:00','2024-02-19 15:13:00','A');
+/*!40000 ALTER TABLE `adm` ENABLE KEYS */;
+
+
+--
+-- Definition of table `cliente`
+--
+
+DROP TABLE IF EXISTS `cliente`;
+CREATE TABLE `cliente` (
+  `idcliente` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `cpf` char(14) NOT NULL,
+  `cadastro` datetime NOT NULL,
+  `ativo` char(1) NOT NULL DEFAULT 'a',
+  `alteracao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`idcliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cliente`
+--
+
+/*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` (`idcliente`,`nome`,`cpf`,`cadastro`,`ativo`,`alteracao`) VALUES 
+ (1,'José Silva','12345','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (2,'Marcos Silveira','54321','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (3,'Maria Ribeiro','34555','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (4,'Ana Agostinho','38876','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (5,'Cleide dos Reis','54325','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (6,'Pietro Miguel Araújo','98987','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (7,'Vera Fagundes','76545','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (8,'Zacarias Santos','56757','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (9,'Oliver do Carmo','56768','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (10,'Bianca Andrade de Jesus','76543','2024-02-05 14:14:00','a','2024-02-05 14:14:47'),
+ (11,'Ingrid Thais Queiroz','25677','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (12,'Bryan Kauan de Andrade','12386','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (13,'Ian Xavier','18867','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (14,'Sara Bernardino Soares','32478','2024-02-05 14:14:00','a','2024-02-05 14:14:25'),
+ (15,'Pedro Martins Santos','33333','2024-02-05 14:14:00','a','2024-02-05 14:14:30');
+/*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
+
+
+--
+-- Definition of table `filme`
+--
+
+DROP TABLE IF EXISTS `filme`;
+CREATE TABLE `filme` (
+  `idfilme` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idgenero` int(10) unsigned NOT NULL,
+  `filme` varchar(45) NOT NULL,
+  `cadastro` datetime NOT NULL,
+  `alteracao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `ativo` char(1) NOT NULL DEFAULT 'a',
+  PRIMARY KEY (`idfilme`,`idgenero`),
+  KEY `FK_filme_genero` (`idgenero`),
+  CONSTRAINT `FK_filme_genero` FOREIGN KEY (`idgenero`) REFERENCES `genero` (`idgenero`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `filme`
+--
+
+/*!40000 ALTER TABLE `filme` DISABLE KEYS */;
+INSERT INTO `filme` (`idfilme`,`idgenero`,`filme`,`cadastro`,`alteracao`,`ativo`) VALUES 
+ (1,1,'Velozes e Furiosos','2024-02-05 14:18:36','2024-02-08 14:08:15','a'),
+ (2,1,'Velozes e Furiosos 2','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (3,1,'Velozes e Furiosos 3','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (4,1,'Velozes e Furiosos 4','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (5,1,'Velozes e Furiosos 5','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (6,1,'Velozes e Furiosos 6','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (7,1,'Velozes e Furiosos 7','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (8,1,'Velozes e Furiosos 8','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (9,1,'Velozes e Furiosos 9','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (10,1,'Velozes e Furiosos 10','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (11,6,'Avatar','2024-02-05 14:18:36','2024-02-05 14:26:37','a'),
+ (12,6,'Chegada','2024-02-05 14:18:36','2024-02-05 14:26:37','a'),
+ (13,7,'Palmen','2024-02-05 14:18:36','2024-02-05 14:26:37','a'),
+ (14,7,'Extraordinário','2024-02-05 14:18:36','2024-02-05 14:26:37','a'),
+ (15,2,'Need For Speed','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (16,1,'Cidade de Deus','2024-02-05 14:18:36','2024-02-08 14:12:05','a'),
+ (17,9,'Toy Story','2024-02-05 14:18:36','2024-02-05 14:26:37','a'),
+ (18,9,'Divertidamente 2','2024-02-05 14:18:36','2024-02-05 14:26:37','a'),
+ (19,10,'A guerra do amanhã','2024-02-05 14:18:36','2024-02-05 14:26:37','a'),
+ (20,10,'Até o último homem','2024-02-05 14:18:36','2024-02-05 14:26:37','a');
+/*!40000 ALTER TABLE `filme` ENABLE KEYS */;
+
+
+--
+-- Definition of table `genero`
+--
+
+DROP TABLE IF EXISTS `genero`;
+CREATE TABLE `genero` (
+  `idgenero` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `genero` varchar(45) NOT NULL,
+  PRIMARY KEY (`idgenero`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `genero`
+--
+
+/*!40000 ALTER TABLE `genero` DISABLE KEYS */;
+INSERT INTO `genero` (`idgenero`,`genero`) VALUES 
+ (1,'Ação'),
+ (2,'Corrida'),
+ (3,'Suspense'),
+ (4,'Aventura'),
+ (5,'Terror'),
+ (6,'Ficção científica'),
+ (7,'Drama'),
+ (8,'Musical'),
+ (9,'Animação'),
+ (10,'Guerra');
+/*!40000 ALTER TABLE `genero` ENABLE KEYS */;
+
+
+--
+-- Definition of table `venda`
+--
+
+DROP TABLE IF EXISTS `venda`;
+CREATE TABLE `venda` (
+  `idvenda` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idfilme` int(10) unsigned NOT NULL,
+  `idcliente` int(10) unsigned NOT NULL,
+  `cadastro` datetime NOT NULL,
+  `alteracao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`idvenda`,`idfilme`,`idcliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `venda`
+--
+
+/*!40000 ALTER TABLE `venda` DISABLE KEYS */;
+INSERT INTO `venda` (`idvenda`,`idfilme`,`idcliente`,`cadastro`,`alteracao`) VALUES 
+ (1,1,1,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (2,4,2,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (3,5,4,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (4,3,3,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (5,2,5,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (6,19,8,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (7,17,7,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (8,6,6,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (9,18,15,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (10,14,9,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (11,7,14,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (12,8,10,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (13,13,11,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (14,10,12,'2024-02-05 14:26:37','2024-02-05 14:30:46'),
+ (15,12,13,'2024-02-05 14:26:37','2024-02-05 14:30:46');
+/*!40000 ALTER TABLE `venda` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
